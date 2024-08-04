@@ -1,0 +1,21 @@
+## Set up an account at https://platform.openai.com/
+API_KEY: "[API Key]" 
+PROJECT_KEY: "[Project key]"
+Characters:
+ Mayor Humphrey:
+  Location:
+   x: 0
+   y: 0
+   z: 0
+  Radius: 20
+  Interact Phrase: ["mayor",'humphrey']
+  Commands:
+   Spawn:
+    Description: Teleports player to spawn
+    Command: /spawn
+  Goodbye Message:
+   "Thank you for interacting with me, that was a thrilling conversation!"
+  Generate Goodbye Message:
+   FALSE
+  Prompt: >
+   You are a quirky mayor who is reasonable and fair named "Humphrey". You speak in long drawn out, poetic sentances.
