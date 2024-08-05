@@ -9,27 +9,28 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ChatQueue {
 	public static HashMap<String, String> playerThreads = new HashMap<String,String>();
 	public static void sendMessage(Player p, String message) {
 		try {
-		if(playerThreads.containsKey(p.getUniqueId())) {
+		if(playerThreads.containsKey(p.getUniqueId().toString())) {
 			ChatGPTAssistant chatGPTAssistant = new ChatGPTAssistant();
-			String threadID= playerThreads.get(p.getUniqueId());
+			String threadID= playerThreads.get(p.getUniqueId().toString());
 			chatGPTAssistant.sendMessage(threadID, message).body();
 			String string = chatGPTAssistant.runThread(threadID, "asst_xvz3t3S3C9icku2WYHcc7aE3", "Samuel").body();
 			RunReturnObject run = new RunReturnObject(string);
 			if(run.isRequiresAction()) {
-				System.out.println("action required");
+				Bukkit.broadcastMessage(ChatColor.RED+"[Action Required]");
 			}
-			Bukkit.broadcastMessage("<Mayor Humphrey> "+run.getText());
+			Bukkit.broadcastMessage(ChatColor.YELLOW+"<Mayor Humphrey> "+run.getText());
 		}else {
 			ChatGPTAssistant chatGPTAssistant = new ChatGPTAssistant();
 			String string = chatGPTAssistant.createAndRunThread(message,"asst_xvz3t3S3C9icku2WYHcc7aE3", "Samuel").body();
 			RunReturnObject run = new RunReturnObject(string);
-			Bukkit.broadcastMessage("<Mayor Humphrey> "+run.getText());
+			Bukkit.broadcastMessage(ChatColor.YELLOW+"<Mayor Humphrey> "+run.getText());
 			playerThreads.put(p.getUniqueId().toString(), run.getThreadID());
 		}
 		} catch (IOException e) {
