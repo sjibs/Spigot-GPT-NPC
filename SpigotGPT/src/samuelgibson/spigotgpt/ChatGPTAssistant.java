@@ -28,6 +28,20 @@ public class ChatGPTAssistant {
 	}
 	
 	
+	public HttpResponse<String> resolveRun(String runID, String threadID,String outputs) throws URISyntaxException, IOException, InterruptedException{
+		String url = String.format("https://api.openai.com/v1/threads/runs");
+		String body = String.format("{\"threadId\":\"%s\"\"runId\":\"%s\"\"functionResponses\":{\"tool_outputs\":%s}\"stream\":true}", threadID,runID, outputs);
+		
+		HttpClient httpClient = HttpClient.newHttpClient();
+
+		HttpRequest request = getDefaultBuilder()
+		  .POST(BodyPublishers.ofString(body))
+		  .uri(new URI(url)).build();
+
+		return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+	}
+	
+	
 	/** This one is used**/
 	public HttpResponse<String> createAndRunThread( String message, String assistantID, String username) throws IOException, URISyntaxException, InterruptedException {
 		String url = String.format("https://api.openai.com/v1/threads/runs");
