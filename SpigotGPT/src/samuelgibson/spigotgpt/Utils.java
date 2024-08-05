@@ -37,8 +37,8 @@ public class Utils {
 	}
 	
 	//TODO: remove for public plugin
-		public static String nameUUIDResolver(Player p) {
-			switch(p.getUniqueId().toString()) {
+		public static String nameUUIDResolver(String name) {
+			switch(name) {
 			case "Michael":
 				return "d08a63b7-ec06-4808-805d-ba187837bc15";
 			case "Sam":

@@ -1,6 +1,13 @@
 package samuelgibson.spigotgpt;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class RunReturnObject {
@@ -36,7 +43,7 @@ public class RunReturnObject {
 					for (int j = 0; j < content.size(); j++) {
 						if(j>0 ) functionString += ", ";
 						JsonObject f = content.get(j).getAsJsonObject().get("function").getAsJsonObject();
-						functionString += "{" +f.get("name").getAsString() + ":";
+						functionString += "{ id:" +content.get(j).getAsJsonObject().get("id").getAsString()+ ", "+f.get("name").getAsString() + ":";
 						if(f.has("arguments")) {
 							functionString +=f.get("arguments").getAsString()+ "}";
 						}else {
@@ -60,11 +67,11 @@ public class RunReturnObject {
 		this.setText(returnString);
 	}
 	
-	public void resolveFunctions() {
-		JsonArray json = Utils.objectToJSONArray(this.getFunctionParameters());
-		for (int j = 0; j < json.size(); j++) {
-			//resolve each function
-		}
+	//Todo: Automate
+	public String resolveFunction(String function, String parameters) {
+		
+		
+		return "";
 	}
 
 	public String getFunctionParameters() {

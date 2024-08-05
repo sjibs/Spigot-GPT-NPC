@@ -16,17 +16,25 @@ public class Events implements Listener {
 	
 	@EventHandler
 	void onPlayerChat( AsyncPlayerChatEvent e) {
-		e.getMessage();
-		if(ChatQueue.isMessaging(e.getPlayer(),"asst_xvz3t3S3C9icku2WYHcc7aE3")) {
-			BukkitTask chatTask = Bukkit.getScheduler().runTaskAsynchronously(Main.plugin, () -> {
-			    ChatQueue.sendMessage(e.getPlayer(),"asst_xvz3t3S3C9icku2WYHcc7aE3", e.getMessage());
-			});
-		}else if(e.getMessage().toLowerCase().contains("humphrey") || e.getMessage().toLowerCase().contains("mayor")) {
-			BukkitTask chatTask = Bukkit.getScheduler().runTaskAsynchronously(Main.plugin, () -> {
-			    ChatQueue.sendMessage(e.getPlayer(),"asst_xvz3t3S3C9icku2WYHcc7aE3", e.getMessage());
-			});
+		BukkitTask chatTask = Bukkit.getScheduler().runTaskAsynchronously(Main.plugin, () -> {
+		for(Character c : Main.characters){
+			if(ChatQueue.isMessaging(e.getPlayer(),c.getAssistant_id())) {
+				if(e.getPlayer().getLocation().distance(c.getLocation())<5) {
+					ChatQueue.sendMessage(e.getPlayer(),c, e.getMessage());
+				}else {
+					ChatQueue.conversations.remove(e.getPlayer().getUniqueId().toString()+c.getAssistant_id());
+				}
+			}else if(e.getMessage().toLowerCase().contains(c.getTriggerName())) {
+				if(e.getPlayer().getLocation().distance(c.getLocation())<5) {
+				    ChatQueue.sendMessage(e.getPlayer(),c, e.getMessage());
+				}
+			}
 		}
-		
-         	
+		});
 	}
+	@EventHandler
+	void onPlayerChat( PlayerMoveEvent e) {
+		
+	}
+	
 }
