@@ -18,7 +18,7 @@ public class Events implements Listener {
 	void onPlayerChat( AsyncPlayerChatEvent e) {
 		e.getMessage();
 		BukkitTask chatTask = Bukkit.getScheduler().runTaskAsynchronously(Main.plugin, () -> {
-		    ChatQueue.sendMessage(e.getPlayer(), e.getMessage());
+		    ChatQueue.sendMessage(e.getPlayer(),"asst_xvz3t3S3C9icku2WYHcc7aE3", e.getMessage());
 		});
          	
 	}
